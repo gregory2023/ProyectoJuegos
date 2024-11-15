@@ -195,7 +195,7 @@ public class juegoBatallaNumeros {
 
                 default:
 
-                    System.out.println("ERROR CAPA 8");
+                    System.out.println("ERROR CAPA 8 :) ");
             }
 
         }
@@ -223,7 +223,7 @@ public class juegoBatallaNumeros {
                 puntos += 400;
             } else {
                 System.out.println("RONDA PERDIDA ");
-                System.out.println("quieres volver a jugar (si/no");
+                System.out.println("quieres volver a jugar (si/no)");
                 String desicion = Entrada.nextLine();
                 if (!desicion.equals("si") && !desicion.equals("SI")) {
                     finJuego();
