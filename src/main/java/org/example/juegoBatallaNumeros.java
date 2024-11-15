@@ -41,6 +41,9 @@ public class juegoBatallaNumeros {
         }
 
         private static void jugador() {
+
+            String desicionPoder="";
+
             for(int i = 1; i <= 3; ++i) {
                 System.out.println("----------------------------------------------------------------------\nturno de jugador");
                 numeroJugador = (int)(Math.random() * 12.0) + 1;
@@ -51,7 +54,7 @@ public class juegoBatallaNumeros {
 
                 do {
                     System.out.println(" QUIERES UTILIZAR UN PODER  (SI/NO) ? \nRECUERDA SOLO TIENES UN PODER POR RONDA ");
-                    String desicionPoder = Entrada.nextLine();
+                    desicionPoder = Entrada.nextLine();
                     if (!desicionPoder.equals("si") && !desicionPoder.equals("SI")) {
                         if (desicionPoder.equals("no") || desicionPoder.equals("NO")) {
                             System.out.println("VALE , JUEGAS SIN PODER");
@@ -94,7 +97,7 @@ public class juegoBatallaNumeros {
                                 System.out.println("VALOR INCORRECTO");
                         }
                     }
-                } while(!poderUtilizado);
+                } while(!poderUtilizado && desicionPoder=="no");
 
                 maquina();
                 operacion();
