@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class juegoBatallaNumeros {
 
 
-
+  //utilizamos variables globales para reutilizar y tener el codigo mas escalable
         public static Scanner Entrada;
         public static int numeroJugador;
         public static int numereroMaquina;
@@ -15,6 +15,11 @@ public class juegoBatallaNumeros {
         public static int partidasGanadas;
         public static int recompensa;
 
+        public static int resta;
+
+        public static boolean poderRestar=false;
+        public static boolean poderDoblar=false;
+        public static boolean poderRobar=false;
 
 
         public static void main(String[] args) {
@@ -52,17 +57,20 @@ public class juegoBatallaNumeros {
                             System.out.println("VALE , JUEGAS SIN PODER");
                         }
                     } else {
-                        System.out.println("GENIAL AQUI TIENES TUS PODERES \n1.DIVIDIR VALOR CONTRINCANTE \n2.DOBLAR NUMERO \n3.ROBAR NUMERO CONTRINCANTE");
+                        System.out.println("GENIAL AQUI TIENES TUS PODERES \n1.RESTAR VALOR CONTRINCANTE \n2.DOBLAR NUMERO \n3.ROBAR NUMERO CONTRINCANTE");
                         int opc = Entrada.nextInt();
-                        Entrada.nextLine();
+                        Entrada.nextLine();//LIMPIA EL SCANNER PARA QUE PUEDA RECIBIR OTRO TIPOS DE DATOS
                         switch (opc) {
                             case 1:
-                                System.out.println("IMPORTANTE !! SI EL NUMERO CONTRINCANTE ES MENOR O IGUAL A 5 PIERDES YA QUE NO SE PUEDE DIVIDIR ESTA CANTIDAD \nCONTINUAS- DIGITE UN NUMERO (1.SI/2.NO) ");
-                                int desicionPoderDividir = Entrada.nextInt();
+                                System.out.println("ESTE PODER RESTA DE FORMA ALEATORIA EL VALOR DE MAQUINA CON UN VALOR DEL 1 al 7 \nACEPTAS (1.SI/2.NO) - INGRESA EL NUMERO");
+                                int desicionPoderResta = Entrada.nextInt();
+                                resta=(int)(Math.random()*7)+1;
                                 Entrada.nextLine();
-                                if (desicionPoderDividir == 1) {
-                                    numereroMaquina /= 2;
+                                if (desicionPoderResta == 1) {
+                                    numereroMaquina -= resta;
                                     System.out.println("PODER APLICADO");
+
+                                    poderRestar = true;
                                     poderUtilizado = true;
                                 } else {
                                     System.out.println("VALE, VUELVES AL MENU INICIAL :) ");
@@ -71,11 +79,15 @@ public class juegoBatallaNumeros {
                             case 2:
                                 numeroJugador *= 2;
                                 System.out.println(" PODER APLICADO , NUMERO POTENCIADO ES IGUAL A :  " + numeroJugador);
+
+                                poderDoblar=true;
                                 poderUtilizado = true;
                                 break;
                             case 3:
                                 numeroJugador = numereroMaquina;
                                 System.out.println("PODER APLICADO, AHORA TU NUMERO ROBADO ES :" + numereroMaquina);
+
+                                poderRobar=true;
                                 poderUtilizado = true;
                                 break;
                             default:
@@ -92,24 +104,97 @@ public class juegoBatallaNumeros {
         }
 
         public static void maquina() {
+
+
+
             System.out.println("----------------------------------------------------------------------\nturno de maquina");
             int decision = (int)(Math.random() * 3.0) + 1;
             switch (decision) {
                 case 1:
-                    System.out.println("MAQUINA A ELEGIDO EL PODER DE DIVIDIR TU NUMERO ");
-                    numeroJugador /= 2;
-                    break;
-                case 2:
-                    if (numereroMaquina <= 10) {
-                        System.out.println("MAQUINA A ELEGIDO  DOBLAR SU NUMERO  ");
-                        numereroMaquina *= 2;
-                        break;
+                    if (poderRestar==true){
+
+                        System.out.println(" PODER -RESTAR- NO DISPONIBLE , USUARIO YA LO UTILIZO");
+                        System.out.println("QUIERES UTILIZAR OTRO PODER (SI/NO)");
+
+                        decision = (int)(Math.random() * 2.0) + 1;
+                        switch (decision){
+                            case 1:
+                                System.out.println("MAQUINA A ELEGIDO  DOBLAR SU NUMERO  ");
+                                numereroMaquina *= 2;
+                                break;
+
+                            case 2:
+                                System.out.println("MAQUINA A ELEGIDO ROBAR TU NUMERO ");
+                                numereroMaquina = numeroJugador;
+                                break;
+                        }
+
+                    }else {
+
+                        System.out.println("MAQUINA A ELEGIDO EL PODER DE RESTAR TU NUMERO ");
+                        resta=(int)(Math.random()*7)+1;
+                        numeroJugador -= resta;
                     }
-                case 3:
-                    System.out.println("MAQUINA A ELEGIDO ROBAR TU NUMERO ");
-                    numereroMaquina = numeroJugador;
                     break;
+
+                case 2:
+                    if (poderDoblar==true){
+
+                        System.out.println("PODER -DOBLAR- NO DISPONIBLE , USUARIO YA LO UTILIZO");
+                        System.out.println("QUIERES UTILIZAR OTRO PODER (SI/NO)");
+                        decision = (int)(Math.random() * 2.0) + 1;
+                        switch (decision){
+                            case 1:
+                                System.out.println("MAQUINA A ELEGIDO EL PODER DE RESTAR TU NUMERO ");
+                                resta=(int)(Math.random()*7)+1;
+                                numeroJugador -= resta;
+                                break;
+
+                            case 2:
+                                System.out.println("MAQUINA A ELEGIDO ROBAR TU NUMERO ");
+                                numereroMaquina = numeroJugador;
+                                break;
+                        }
+
+
+                    }else {
+
+                        if (numereroMaquina <= 10) {
+                            System.out.println("MAQUINA A ELEGIDO  DOBLAR SU NUMERO  ");
+                            numereroMaquina *= 2;
+                        }
+                    }
+                    break;
+
+                case 3:
+                    if (poderRobar==true){
+
+                        System.out.println("PODER -ROBAR- NO DISPONIBLE , USUARIO YA LO UTILIZO");
+                        System.out.println("QUIERES UTILIZAR OTRO PODER (SI/NO)");
+                        decision = (int)(Math.random() * 2.0) + 1;
+                        switch (decision){
+                            case 1:
+                                System.out.println("MAQUINA A ELEGIDO EL PODER DE RESTAR TU NUMERO ");
+                                resta=(int)(Math.random()*7)+1;
+                                numeroJugador -= resta;
+                                break;
+
+                            case 2:
+                                System.out.println("MAQUINA A ELEGIDO ROBAR TU NUMERO ");
+                                numereroMaquina = numeroJugador;
+                                break;
+                        }
+
+                    }else{
+
+                        System.out.println("MAQUINA A ELEGIDO ROBAR TU NUMERO ");
+                        numereroMaquina = numeroJugador;
+                    }
+
+                    break;
+
                 default:
+
                     System.out.println("ERROR CAPA 8");
             }
 
